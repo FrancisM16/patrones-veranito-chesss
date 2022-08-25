@@ -308,13 +308,10 @@ public abstract class ChessGamePiece implements Serializable {
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow - i, pieceColumn + i )
+                if ( (isOnScreen( pieceRow - i, pieceColumn + i )
                     && ( board.getCell( pieceRow - i,
-                        pieceColumn + i).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow - i ) + "," + ( pieceColumn + i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow - i, pieceColumn + i ) ){
+                        pieceColumn + i).getPieceOnSquare() == null )) || 
+                        ( isEnemy( board, pieceRow - i, pieceColumn + i ))   ){
                     moves.add( ( pieceRow - i ) + "," + ( pieceColumn + i ) );
                     count++;
                 }
@@ -340,13 +337,10 @@ public abstract class ChessGamePiece implements Serializable {
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow + i, pieceColumn - i )
+                if ( (isOnScreen( pieceRow + i, pieceColumn - i )
                     && ( board.getCell( pieceRow + i,
-                        pieceColumn - i ).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow + i ) + "," + ( pieceColumn - i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow + i, pieceColumn - i ) ){
+                        pieceColumn - i ).getPieceOnSquare() == null )) || 
+                        ( isEnemy( board, pieceRow + i, pieceColumn - i ) ) ){
                     moves.add( ( pieceRow + i ) + "," + ( pieceColumn - i ) );
                     count++;
                 }
@@ -372,13 +366,10 @@ public abstract class ChessGamePiece implements Serializable {
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow + i, pieceColumn + i )
+                if ( (isOnScreen( pieceRow + i, pieceColumn + i )
                     && ( board.getCell( pieceRow + i,
-                        pieceColumn + i ).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow + i ) + "," + ( pieceColumn + i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow + i, pieceColumn + i ) ){
+                        pieceColumn + i ).getPieceOnSquare() == null )) || 
+                        ( isEnemy( board, pieceRow + i, pieceColumn + i ) ) ){
                     moves.add( ( pieceRow + i ) + "," + ( pieceColumn + i ) );
                     count++;
                 }
