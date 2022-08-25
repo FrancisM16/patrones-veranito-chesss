@@ -1,8 +1,15 @@
+package org.screen.pieces;
+
+import java.util.List;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
+
+import org.screen.board.ChessGameBoard;
+import org.screen.board.ChessGamePiece;
+import org.screen.enums.PieceColorEnum;
 // -------------------------------------------------------------------------
 /**
- * Represents a Knight game piece.
+ * Represents a game.Knight game piece.
  *
  * @author Ben Katz (bakatz)
  * @author Myles David II (davidmm2)
@@ -12,7 +19,7 @@ import java.util.ArrayList;
 public class Knight
     extends ChessGamePiece{
     /**
-     * Knight constructor for gamePiece
+     * game.Knight constructor for gamePiece
      *
      * @param row
      *            the row to create the knight on
@@ -23,7 +30,7 @@ public class Knight
      * @param color
      *            either GamePiece.WHITE, BLACK, or UNASSIGNED
      */
-    public Knight( ChessGameBoard board, int row, int col, int color ){
+    public Knight(ChessGameBoard board, int row, int col, PieceColorEnum color ){
         super( board, row, col, color );
     }
     /**
@@ -32,10 +39,10 @@ public class Knight
      *
      * @param board
      *            the board to check moves on
-     * @return ArrayList<String> a list of the possible moves
+     * @return List<String> a list of the possible moves
      */
-    private ArrayList<String> calculateNorthMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+    private List<String> calculateNorthMoves( ChessGameBoard board ){
+        List<String> moves = new ArrayList<>();
         for ( int i = 2; i >= -2; i -= 4 ){
             for ( int j = 1; j >= -1; j -= 2 ){
                 if ( isOnScreen( pieceRow + i, pieceColumn + j )
@@ -56,10 +63,10 @@ public class Knight
      *
      * @param board
      *            the board to check moves on
-     * @return ArrayList<String> a list of the possible moves
+     * @return List<String> a list of the possible moves
      */
-    private ArrayList<String> calculateSouthMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+    private List<String> calculateSouthMoves( ChessGameBoard board ){
+        List<String> moves = new ArrayList<>();
         for ( int i = 1; i >= -1; i -= 2 ){
             for ( int j = 2; j >= -2; j -= 4 ){
                 if ( isOnScreen( pieceRow + i, pieceColumn + j )
@@ -75,15 +82,15 @@ public class Knight
         return moves;
     }
     /**
-     * Calculates the possible moves for this Knight.
+     * Calculates the possible moves for this game.Knight.
      *
      * @param board
      *            the game board to check
-     * @return ArrayList<String> the list of possible moves
+     * @return List<String> the list of possible moves
      */
     @Override
-    protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+    protected List<String> calculatePossibleMoves( ChessGameBoard board ){
+        List<String> moves = new ArrayList<>();
         if ( isPieceOnScreen() ){
             moves.addAll( calculateNorthMoves( board ) );
             moves.addAll( calculateSouthMoves( board ) );
@@ -97,20 +104,20 @@ public class Knight
      */
     @Override
     public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == ChessGamePiece.WHITE ){
+        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
             return new ImageIcon(
-                getClass().getResource("chessImages/WhiteKnight.gif")
+                getClass().getResource("/chessImages/WhiteKnight.gif")
             );            
         }
-        else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
+        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
             return new ImageIcon(
-                getClass().getResource("chessImages/BlackKnight.gif")
+                getClass().getResource("/chessImages/BlackKnight.gif")
             );            
         }
         else
         {
             return new ImageIcon(
-                getClass().getResource("chessImages/default-Unassigned.gif")
+                getClass().getResource("/chessImages/default-Unassigned.gif")
             );            
         }
     }

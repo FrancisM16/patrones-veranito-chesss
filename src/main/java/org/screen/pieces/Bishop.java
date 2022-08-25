@@ -1,8 +1,15 @@
+package org.screen.pieces;
+
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
+
+import org.screen.board.ChessGameBoard;
+import org.screen.board.ChessGamePiece;
+import org.screen.enums.PieceColorEnum;
 // -------------------------------------------------------------------------
 /**
- * Class to represent the Bishop piece.
+ * Class to represent the game.Bishop piece.
  * 
  * @author Ben Katz (bakatz)
  * @author Myles David II (davidmm2)
@@ -11,18 +18,18 @@ import javax.swing.ImageIcon;
  */
 public class Bishop extends ChessGamePiece{
 	/**
-	 * Creates a new Bishop object.
+	 * Creates a new game.Bishop object.
 	 * 
 	 * @param board
 	 *			board the board to create the bishop on
 	 * @param row
-	 *			row location of the Bishop
+	 *			row location of the game.Bishop
 	 * @param col
-	 *			col location of the Bishop
+	 *			col location of the game.Bishop
 	 * @param color
 	 *			either GamePiece.WHITE, BLACK, or UNASSIGNED
 	 */
-	public Bishop( ChessGameBoard board, int row, int col, int color ){
+	public Bishop(ChessGameBoard board, int row, int col, PieceColorEnum color ){
 		super( board, row, col, color );
 	}
 	/**
@@ -31,15 +38,15 @@ public class Bishop extends ChessGamePiece{
 	 * 
 	 * @param board
 	 *			the game board to calculate moves on
-	 * @return ArrayList<String> the moves
+	 * @return List<String> the moves
 	 */
 	@Override
-	protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-		ArrayList<String> northEastMoves = calculateNorthEastMoves( board, 8 );
-		ArrayList<String> northWestMoves = calculateNorthWestMoves( board, 8 );
-		ArrayList<String> southEastMoves = calculateSouthEastMoves( board, 8 );
-		ArrayList<String> southWestMoves = calculateSouthWestMoves( board, 8 );
-		ArrayList<String> allMoves = new ArrayList<String>();
+	protected List<String> calculatePossibleMoves(ChessGameBoard board ){
+		List<String> northEastMoves = calculateNorthEastMoves( board, 8 );
+		List<String> northWestMoves = calculateNorthWestMoves( board, 8 );
+		List<String> southEastMoves = calculateSouthEastMoves( board, 8 );
+		List<String> southWestMoves = calculateSouthWestMoves( board, 8 );
+		List<String> allMoves = new ArrayList<>();
 		allMoves.addAll( northEastMoves );
 		allMoves.addAll( northWestMoves );
 		allMoves.addAll( southEastMoves );
@@ -53,19 +60,19 @@ public class Bishop extends ChessGamePiece{
 	 */
 	@Override
 	public ImageIcon createImageByPieceType(){
-		if ( getColorOfPiece() == ChessGamePiece.WHITE ){
+		if ( getColorOfPiece() == PieceColorEnum.WHITE ){
 			return new ImageIcon(
-				getClass().getResource("chessImages/WhiteBishop.gif")
+				getClass().getResource("/chessImages/WhiteBishop.gif")
 			);			
 		}
-		else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
+		else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
 			return new ImageIcon(
-				getClass().getResource("chessImages/BlackBishop.gif")
+				getClass().getResource("/chessImages/BlackBishop.gif")
 			);
 		}
 		else{
 			return new ImageIcon(
-				getClass().getResource("chessImages/BlackBishop.gif")
+				getClass().getResource("/chessImages/BlackBishop.gif")
 			);
 		}
 	}

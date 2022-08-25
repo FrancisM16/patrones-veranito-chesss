@@ -1,9 +1,23 @@
+package org.screen.board;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+
+import org.ChessPanel;
+import org.screen.enums.PieceColorEnum;
+import org.screen.pieces.Bishop;
+import org.screen.pieces.BoardSquare;
+import org.screen.pieces.King;
+import org.screen.pieces.Knight;
+import org.screen.pieces.Pawn;
+import org.screen.pieces.Queen;
+import org.screen.pieces.Rook;
 // -------------------------------------------------------------------------
 /**
  * The panel that represents the Chess game board. Contains a few methods that
@@ -21,7 +35,7 @@ public class ChessGameBoard extends JPanel{
     /**
      * Returns the entire board.
      *
-     * @return BoardSquare[][] the chess board
+     * @return game.BoardSquare[][] the chess board
      */
     public BoardSquare[][] getCells(){
         return chessCells;
@@ -39,10 +53,10 @@ public class ChessGameBoard extends JPanel{
     }
     // ----------------------------------------------------------
     /**
-     * Gets the BoardSquare at row 'row' and column 'col'.
+     * Gets the game.BoardSquare at row 'row' and column 'col'.
      * @param row the row to look at
      * @param col the column to look at
-     * @return BoardSquare the square found, or null if it does not exist
+     * @return game.BoardSquare the square found, or null if it does not exist
      */
     public BoardSquare getCell( int row, int col ){
         if ( validateCoordinates( row, col ) ){
@@ -71,15 +85,15 @@ public class ChessGameBoard extends JPanel{
     /**
      * Gets all the white game pieces on the board.
      *
-     * @return ArrayList<GamePiece> the pieces
+     * @return List<GamePiece> the pieces
      */
-    public ArrayList<ChessGamePiece> getAllWhitePieces(){
-        ArrayList<ChessGamePiece> whitePieces = new ArrayList<ChessGamePiece>();
+    public List<ChessGamePiece> getAllWhitePieces(){
+        List<ChessGamePiece> whitePieces = new ArrayList<>();
         for ( int i = 0; i < 8; i++ ){
             for ( int j = 0; j < 8; j++ ){
                 if ( chessCells[i][j].getPieceOnSquare() != null
                     && chessCells[i][j].getPieceOnSquare().getColorOfPiece() ==
-                        ChessGamePiece.WHITE ){
+                    PieceColorEnum.WHITE ){
                     whitePieces.add( chessCells[i][j].getPieceOnSquare() );
                 }
             }
@@ -90,15 +104,15 @@ public class ChessGameBoard extends JPanel{
     /**
      * Gets all the black pieces on the board
      *
-     * @return ArrayList<GamePiece> the pieces
+     * @return List<GamePiece> the pieces
      */
-    public ArrayList<ChessGamePiece> getAllBlackPieces(){
-        ArrayList<ChessGamePiece> blackPieces = new ArrayList<ChessGamePiece>();
+    public List<ChessGamePiece> getAllBlackPieces(){
+        List<ChessGamePiece> blackPieces = new ArrayList<>();
         for ( int i = 0; i < 8; i++ ){
             for ( int j = 0; j < 8; j++ ){
                 if ( chessCells[i][j].getPieceOnSquare() != null
                     && chessCells[i][j].getPieceOnSquare().getColorOfPiece() ==
-                        ChessGamePiece.BLACK ){
+                    PieceColorEnum.BLACK ){
                     blackPieces.add( chessCells[i][j].getPieceOnSquare() );
                 }
             }
@@ -107,7 +121,7 @@ public class ChessGameBoard extends JPanel{
     }
     // ----------------------------------------------------------
     /**
-     * Create a new ChessGameBoard object.
+     * Create a new game.ChessGameBoard object.
      */
     public ChessGameBoard(){
         this.setLayout( new GridLayout( 8, 8, 1, 1 ) );
@@ -148,63 +162,53 @@ public class ChessGameBoard extends JPanel{
             }
         }
         repaint();
-        //revalidate();
         // only the combination of these two calls work...*shrug*
     }
     /**
-     * (Re)initializes this ChessGameBoard to its default layout with all 32
+     * (Re)initializes this game.ChessGameBoard to its default layout with all 32
      * pieces added.
      */
     public void initializeBoard(){
-        resetBoard( false );
+        resetBoard(false);
         for ( int i = 0; i < chessCells.length; i++ ){
             for ( int j = 0; j < chessCells[0].length; j++ ){
-                ChessGamePiece pieceToAdd;
-                if ( i == 1 ) // black pawns
-                {
-                    pieceToAdd = new Pawn( this, i, j, ChessGamePiece.BLACK );
-                }
-                else if ( i == 6 ) // white pawns
-                {
-                    pieceToAdd = new Pawn( this, i, j, ChessGamePiece.WHITE );
-                }
-                else if ( i == 0 || i == 7 ) // main rows
-                {
-                    int colNum =
-                        i == 0 ? ChessGamePiece.BLACK : ChessGamePiece.WHITE;
-                    if ( j == 0 || j == 7 ){
-                        pieceToAdd = new Rook( this, i, j, colNum );
-                    }
-                    else if ( j == 1 || j == 6 ){
-                        pieceToAdd = new Knight( this, i, j, colNum );
-                    }
-                    else if ( j == 2 || j == 5 ){
-                        pieceToAdd = new Bishop( this, i, j, colNum );
-                    }
-                    else if ( j == 3 ){
-                        pieceToAdd = new King( this, i, j, colNum );
-                    }
-                    else
-                    {
-                        pieceToAdd = new Queen( this, i, j, colNum );
-                    }
-                }
-                else
-                {
-                    pieceToAdd = null;
-                }
-                chessCells[i][j] = new BoardSquare( i, j, pieceToAdd );
-                if ( ( i + j ) % 2 == 0 ){
-                    chessCells[i][j].setBackground( Color.WHITE );
-                }
-                else
-                {
-                    chessCells[i][j].setBackground( Color.BLACK );
-                }
-                chessCells[i][j].addMouseListener( listener );
-                this.add( chessCells[i][j] );
+                ChessGamePiece pieceToAdd = null;
+                pieceToAdd = instantiatePiece(i, j);
+                initializeCells(i, j, pieceToAdd);
             }
         }
+    }
+
+    public ChessGamePiece instantiatePiece(int i, int j) {
+        float mv = 3.5f;
+        PieceColorEnum pieceColor = i == 1 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE;
+        if (Math.abs(mv - i) == 2.5f) {
+            return new Pawn(this, i, j, pieceColor);
+        } else if (Math.abs(mv - i) == mv) { // main rows
+            pieceColor = i == 0 ? PieceColorEnum.BLACK : PieceColorEnum.WHITE;
+            if (Math.abs(mv - j) == mv){
+                return new Rook( this, i, j, pieceColor);
+            }
+            else if (Math.abs(mv - j) == 2.5f){
+                return new Knight( this, i, j, pieceColor);
+            }
+            else if (Math.abs(mv - j) == 1.5f){
+                return new Bishop( this, i, j, pieceColor);
+            }
+            else if (j == 3){
+                return new King( this, i, j, pieceColor);
+            }
+            return new Queen( this, i, j, pieceColor);
+        }
+        return null;
+    }
+
+    public void initializeCells(int i, int j, ChessGamePiece pieceToAdd) {
+        chessCells[i][j] = new BoardSquare( i, j, pieceToAdd );
+        Color chessCellColor = ((i + j) % 2 == 0) ? Color.WHITE : Color.BLACK;
+        chessCells[i][j].setBackground(chessCellColor);
+        chessCells[i][j].addMouseListener( listener );
+        this.add(chessCells[i][j]);
     }
     // ----------------------------------------------------------
     /**
@@ -232,7 +236,7 @@ public class ChessGameBoard extends JPanel{
      * @version 2010.11.16
      */
     private class BoardListener
-        implements MouseListener
+        implements MouseListener, Serializable
     {
         /**
          * Do an action when the left mouse button is clicked.

@@ -1,6 +1,9 @@
+package org.logic;
+
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.util.Date;
+import javax.swing.ScrollPaneConstants;
 // -------------------------------------------------------------------------
 /**
  * A scrollable textArea representing the game log. (i.e. moves made by each
@@ -16,13 +19,13 @@ public class ChessGameLog
     private JTextArea textArea;
     // ----------------------------------------------------------
     /**
-     * Create a new ChessGameLog object.
+     * Create a new game.ChessGameLog object.
      */
     public ChessGameLog(){
         super(
             new JTextArea( "", 5, 30 ),
-            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS );
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS );
         textArea = ( (JTextArea)this.getViewport().getView() );
     }
     // ----------------------------------------------------------

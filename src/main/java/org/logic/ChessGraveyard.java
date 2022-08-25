@@ -1,5 +1,9 @@
+package org.logic;
+
 import java.awt.GridLayout;
 import javax.swing.*;
+
+import org.screen.board.ChessGamePiece;
 // -------------------------------------------------------------------------
 /**
  * Represents the graveyard where pieces lie after being captured.
@@ -14,7 +18,7 @@ public class ChessGraveyard
     private String title;
     // ----------------------------------------------------------
     /**
-     * Create a new ChessGraveyard object.
+     * Create a new game.ChessGraveyard object.
      *
      * @param title
      *            the title of the graveyard

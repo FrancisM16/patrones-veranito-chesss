@@ -1,6 +1,10 @@
+package org.logic;
+
 import java.awt.Component;
 import java.awt.event.*;
 import javax.swing.*;
+
+import org.ChessPanel;
 // -------------------------------------------------------------------------
 /**
  * Represents the north menu-bar that contains various controls for the game.
@@ -14,7 +18,7 @@ public class ChessMenuBar
     extends JMenuBar{
     // ----------------------------------------------------------
     /**
-     * Create a new ChessMenuBar object.
+     * Create a new game.ChessMenuBar object.
      */
     public ChessMenuBar(){
         String[] menuCategories = { "File", "Options", "Help" };

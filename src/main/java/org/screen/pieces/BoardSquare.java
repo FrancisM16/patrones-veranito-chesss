@@ -1,5 +1,9 @@
+package org.screen.pieces;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.screen.board.ChessGamePiece;
 // -------------------------------------------------------------------------
 /**
  * Represents a cell on the chess board. Holds a game piece.
@@ -17,7 +21,7 @@ public class BoardSquare
     private JLabel         imageLabel;
     // ----------------------------------------------------------
     /**
-     * Create a new BoardSquare object.
+     * Create a new game.BoardSquare object.
      *
      * @param row
      *            the row
@@ -34,7 +38,7 @@ public class BoardSquare
         updateImage();
     }
     /**
-     * Updates the image for this BoardSquare.
+     * Updates the image for this game.BoardSquare.
      */
     private void updateImage(){
         if ( imageLabel != null ){
